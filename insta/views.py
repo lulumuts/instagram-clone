@@ -1,5 +1,8 @@
 from django.shortcuts import render
 from .forms import InstaLetterForm
+from .models import InstaLetterRecipients
+from .email import send_welcome_email
+from django.http import HttpResponseRedirect
 #................
 # Create your views here.
 def welcome(request):
@@ -11,6 +14,9 @@ def welcome(request):
             email = form.cleaned_data['email']
             recipient = InstaLetterRecipients(name = name, email=email)
             recipient.save()
+            send_welcome_email(name,email)
+
+
             HttpResponseRedirect('welcome')
     else:
         form = InstaLetterForm()
