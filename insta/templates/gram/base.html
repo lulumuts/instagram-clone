@@ -5,9 +5,17 @@
 <html>
 <head>
   <meta charset="utf-8">
+  {% block styles %}
+  {% bootstrap_css %}
+  {% endblock %}
 
 </head>
 <body>
-    {% block content %} <h1>testing</h1> {%endblock%}
+
+  {% include "navbar.html" %}
+
+  {% block content %}
+
+  {%endblock%}
 </body>
 </html>
