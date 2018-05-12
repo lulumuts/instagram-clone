@@ -4,6 +4,7 @@ from .models import InstaLetterRecipients
 from .email import send_welcome_email
 from django.http import HttpResponseRedirect
 from django.contrib.auth.decorators import login_required
+from django.core.urlresolvers import reverse
 
 def welcome(request):
 
@@ -17,7 +18,7 @@ def welcome(request):
             send_welcome_email(name,email)
 
 
-            HttpResponseRedirect('welcome')
+            return HttpResponseRedirect('/accounts/login/')
     else:
         form = InstaLetterForm()
     return render(request, 'gram/newsfeed.html',{"letterForm" : form})
@@ -33,6 +34,19 @@ def new_profile(request):
             profile.image_profile = current_user
             profile.save()
 
+            return HttpResponseRedirect(reverse('new-profile'))
+
     else:
         form = NewProfileForm()
     return render(request, 'new_profile.html', {"form":form})
+
+
+def home(request):
+    return render(request, 'home.html')
+
+
+
+
+def myprofile(request):
+
+    return render(request, 'gram/myprofile.html')

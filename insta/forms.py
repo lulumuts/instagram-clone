@@ -9,4 +9,4 @@ class InstaLetterForm(forms.Form):
 class NewProfileForm(forms.ModelForm):
     class Meta:
         model = Profile
-        exclude = ['']
+        exclude = ['profile_follows']

@@ -16,7 +16,7 @@
 
 <body>
 
-  <form  action="{%url 'new-profile'%}" method="post" enctype="multipart/form-data">
+  <form  action="{%url 'myprofile'%}" method="post" enctype="multipart/form-data">
     {%csrf_token%}
 
     {% bootstrap_form form%}
