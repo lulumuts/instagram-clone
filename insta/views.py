@@ -1,8 +1,9 @@
-from django.shortcuts import render
+from django.shortcuts import render,render_to_response
 from .forms import InstaLetterForm,NewProfileForm
-from .models import InstaLetterRecipients
+from .models import InstaLetterRecipients,Image,Profile
+from django.contrib.auth.models import User
 from .email import send_welcome_email
-from django.http import HttpResponseRedirect
+from django.http import HttpResponseRedirect,Http404,HttpResponseRedirect
 from django.contrib.auth.decorators import login_required
 from django.core.urlresolvers import reverse
 
@@ -33,20 +34,40 @@ def new_profile(request):
             profile = form.save(commit=False)
             profile.image_profile = current_user
             profile.save()
-
-            return HttpResponseRedirect(reverse('new-profile'))
-
     else:
         form = NewProfileForm()
     return render(request, 'new_profile.html', {"form":form})
 
 
 def home(request):
-    return render(request, 'home.html')
+
+    mass = Profile.objects.all()
+    return render(request, 'gram/home.html',{"mass":mass})
 
 
+@login_required
+def myprofile(request, profile_id):
+    if profile_id == "0":
+        if request.user.is_authenticated:
+            userProfile = Profile.objects.get(pk=profile_id)
+    else:
+        userProfile = Profile.objects.get(pk=profile_id)
 
+    return render(request,'gram/myprofile.html', {'userProfile':userProfile})
 
-def myprofile(request):
+@login_required(login_url='/accounts/login/')
+def register(request):
+    return render(request,'registration/registration_form.html')
 
-    return render(request, 'gram/myprofile.html')
+@login_required(login_url='/accounts/login/')
+def new_posts(request):
+    current_user = request.user
+    if request.method == 'POST':
+        form = NewProfileForm(request.POST, request.FILES)
+        if form.is_valid():
+            profile = form.save(commit=False)
+            profile.image_profile = current_user
+            profile.save()
+    else:
+        form = NewProfileForm()
+    return render(request, 'posts.html', {"form":form})

@@ -45,7 +45,7 @@
   </div>
 </nav>
 
-  <form  action="{%url 'new-profile' %}" method="post" enctype="multipart/form-data">
+  <form  action="{%url 'new-posts' %}" method="post" enctype="multipart/form-data">
     {%csrf_token%}
 
     {% bootstrap_form form%}

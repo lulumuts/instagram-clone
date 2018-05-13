@@ -3,5 +3,24 @@
 
 {% block content %}
 {{bock.super}}
+
 <h1>checking</h2>
+{% if user.is_authenticated %}
+<div class="container">
+<h2>{{user.username}}<h3>
+
+
+
+    <p>{{userProfile.profile_user_id}}</p>
+    <div class="row">
+      <a href="{% url 'new-profile' %}"><img src="{{userProfile.profile_photo.url}}"  class="img-responsive" alt="" style="height:5em;border-radius:60%;margin-bottom:2%;"></a>
+      <p>{{userProfile.bio}}</p>
+    </div>
+    <a href="{% url 'new-posts' %}">post here</a>
+  </div>
+
+
+{%endif%}
+
+
 {% endblock %}

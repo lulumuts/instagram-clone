@@ -9,7 +9,7 @@
 <nav class="navbar navbar-blank">
   <div class="container-fluid">
     <div class="navbar-header">
-      <a class="navbar-brand" href="{% url 'insta' %}">The Moringa Tribune</a>
+      <a class="navbar-brand" href="{% url 'home' %}">Instagram</a>
     </div>
 
     <!-- Adding a search form -->
@@ -20,19 +20,17 @@
       <div class="col-sm-6 col-md-6">
         {% if user.is_authenticated %}
         <ul>
-          <li class="dropdown">
-            <a href="#" class="dropdown-toggle btn btn-default" data-toggle="dropdown" role="button" aria-expanded="false">Account<span class="caret"></span></a>
 
-            <ul class="dropdown-menu" role="menu">
-              <li><a href="{%url 'insta' %}">Home</a></li>
-              <li><a href="{%url 'new-profile' %}">Create Profile</a></li>
+
+              <li><a href="{% url 'myprofile' user.id %}">Your Profile</a></li>
               <li><a href="/accounts/password/change">Change Password</a></li>
               <li><a href="/logout">Logout</a></li>
-            </ul>
-          </li>
+
+
         </ul>
         {% else %}
         <li><a class="btn btn-default" href="/accounts/login">Login</a>
+          <li><a class="btn btn-default" href="/accounts/register">register</a>
         </li>
         {%endif%}
       </div>
