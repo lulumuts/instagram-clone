@@ -1,5 +1,5 @@
 from django.shortcuts import render,render_to_response
-from .forms import InstaLetterForm,NewProfileForm
+from .forms import InstaLetterForm,NewProfileForm,NewPostsForm
 from .models import InstaLetterRecipients,Image,Profile
 from django.contrib.auth.models import User
 from .email import send_welcome_email
@@ -62,12 +62,21 @@ def register(request):
 @login_required(login_url='/accounts/login/')
 def new_posts(request):
     current_user = request.user
+    profile_o = Profile.objects.get(profile_user=current_user)
     if request.method == 'POST':
-        form = NewProfileForm(request.POST, request.FILES)
+        form = NewPostsForm(request.POST, request.FILES)
         if form.is_valid():
-            profile = form.save(commit=False)
-            profile.image_profile = current_user
-            profile.save()
+            image = form.save(commit=False)
+            image.image_profile = profile_o
+            image.save()
     else:
-        form = NewProfileForm()
+        form = NewPostsForm()
     return render(request, 'posts.html', {"form":form})
+
+def photos(request):
+    print("foobar")
+
+    userPosts = Image.objects.all()
+    print("hello mike")
+    print(userPosts)
+    return render(request,'gram/myprofile.html', {'userPosts':userPosts})

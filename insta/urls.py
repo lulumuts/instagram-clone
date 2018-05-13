@@ -12,6 +12,8 @@ urlpatterns=[
     url(r'^posts/',views.new_posts, name='new-posts'),
     url(r'^myprofile/(?P<profile_id>\d+)/$',views.myprofile, name='myprofile'),
     url(r'^register/',views.register, name='register'),
+    url(r'^myprofile/$',views.photos,name='photos'),
+
 
 
 ]
