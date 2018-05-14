@@ -1,4 +1,4 @@
-from django.shortcuts import render,render_to_response
+from django.shortcuts import render,render_to_response,redirect
 from .forms import InstaLetterForm,NewProfileForm,NewPostsForm
 from .models import InstaLetterRecipients,Image,Profile
 from django.contrib.auth.models import User
@@ -40,9 +40,18 @@ def new_profile(request):
 
 
 def home(request):
-
+    photo = Image.objects.all()
     mass = Profile.objects.all()
-    return render(request, 'gram/home.html',{"mass":mass})
+    return render(request, 'gram/home.html',{"mass":mass,"photo":photo})
+
+def photos(request):
+
+    current_user = request.user
+    photo = Image.objects.all()
+    comments = Image.objects.all().prefetch_related('image_comments')
+    if current_user.is_authenticated():
+        HttpResponseRedirect('index')
+    return render(request, 'gram/myprofile.html', {'photo': photo})
 
 
 @login_required
@@ -50,14 +59,29 @@ def myprofile(request, profile_id):
     if profile_id == "0":
         if request.user.is_authenticated:
             userProfile = Profile.objects.get(pk=profile_id)
+
     else:
         userProfile = Profile.objects.get(pk=profile_id)
 
-    return render(request,'gram/myprofile.html', {'userProfile':userProfile})
+    current_user = request.user
+    photo = Image.objects.all()
+    print(photo)
+    comments = Image.objects.all().prefetch_related('image_comments')
+    if current_user.is_authenticated():
+        HttpResponseRedirect('index')
+
+    userProfile = Profile.objects.get(pk=current_user.id)
+    print(userProfile)
+
+
+    return render(request,'gram/myprofile.html', {'userProfile':userProfile,"photo":photo})
+
 
 @login_required(login_url='/accounts/login/')
 def register(request):
     return render(request,'registration/registration_form.html')
+
+
 
 @login_required(login_url='/accounts/login/')
 def new_posts(request):
@@ -69,14 +93,7 @@ def new_posts(request):
             image = form.save(commit=False)
             image.image_profile = profile_o
             image.save()
+            return redirect('/')
     else:
         form = NewPostsForm()
     return render(request, 'posts.html', {"form":form})
-
-def photos(request):
-    print("foobar")
-
-    userPosts = Image.objects.all()
-    print("hello mike")
-    print(userPosts)
-    return render(request,'gram/myprofile.html', {'userPosts':userPosts})

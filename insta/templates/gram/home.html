@@ -14,4 +14,8 @@
     </div>
 
     {%endfor%}
+
+    {%for photo_item in photo%}
+    <img src="{{photo_item.image.url}}">
+    {%endfor%}
 {% endblock %}
