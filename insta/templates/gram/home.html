@@ -6,16 +6,22 @@
 <h1>hello {{name}}</h2>
 
 
-    {% for mass_item in mass %}
 
-    <p>{{mass_item.bio}}</p>
-    <div class="row">
-      <img src="{{mass_item.profile_photo.url}}"  class="img-responsive" alt="">
-    </div>
-
-    {%endfor%}
 
     {%for photo_item in photo%}
-    <img src="{{photo_item.image.url}}">
+    <div class="card" style="background-color:white;margin-left:20vw;margin-right:30vw;margin-bottom:5vh;width:42vw;">
+
+        <img src="{{photo_item.image_profile.profile_photo.url}}"  class="img-responsive" alt="" style="height:4%;width:10%;border-radius:70%;margin-bottom:2%;margin-left:4%;">
+
+
+
+      <img src="{{photo_item.image.url}}" alt="Avatar" style="width:100%;">
+      <div class="container">
+        <h4 style="width:40%;"><b>{{photo_item.image_caption}}</b></h4>
+        <p>Architect & Engineer</p>
+      </div>
+    </div>
+
+
     {%endfor%}
 {% endblock %}

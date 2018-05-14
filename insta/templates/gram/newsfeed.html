@@ -6,7 +6,7 @@
 <h1>checking</h2>
 
   <div class="container-fluid">
-
+{% if user.is_authenticated %}
     <form  action="{%url 'insta'%}" method="post">
       {%csrf_token%}
 
@@ -15,4 +15,5 @@
     </form>
 <p>Login in to your account</p>
   </div>
+  {%endif%}
 {% endblock %}

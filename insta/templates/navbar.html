@@ -1,3 +1,5 @@
+{% load bootstrap3 %} {% load staticfiles %}
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -6,28 +8,28 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
 </head>
 <body>
-<nav class="navbar navbar-light" style="background-color:white;border-bottom:grey;">
+<nav class="navbar navbar-light" style="background-color:white;border-bottom:grey;height:15vh;">
   <div class="container-fluid">
     <div class="navbar-header">
-      <a class="navbar-brand" href="{% url 'home' %}">Instagram</a>
+      <span><img src="{% static 'img/instagram-new.png' %}" style="height:7vh;margin-left:-20vw;margin-top:4%;"></span>
+      <a class="navbar-brand" href="{% url 'home' %}"><img src="{% static 'img/instagram-logo.png' %}" style="height:8vh;margin-left:18vw;"></a>
+
     </div>
 
     <!-- Adding a search form -->
-    <div class="col-sm-4 navbar-right">
+    <div class="col-sm-3 navbar-right">
 
 
       <!-- search form end -->
       <div class="col-sm-6 col-md-6">
         {% if user.is_authenticated %}
-        <ul>
 
 
-              <li><a href="{% url 'myprofile' user.id %}">Your Profile</a></li>
-              <li><a href="/accounts/password/change">Change Password</a></li>
-              <li><a href="/logout">Logout</a></li>
+
+              <span><a href="{% url 'myprofile' user.id %}"><img src="{% static 'img/avatar.png' %}" style="height:10vh;margin-left:14vw;margin-top:2vh;"></a></span>
 
 
-        </ul>
+
         {% else %}
         <li><a class="btn btn-default" href="/accounts/login">Login</a>
           <li><a class="btn btn-default" href="/accounts/register">register</a>
@@ -35,6 +37,7 @@
         {%endif%}
       </div>
   </div>
+</div>
 </nav>
 </body>
 </html>

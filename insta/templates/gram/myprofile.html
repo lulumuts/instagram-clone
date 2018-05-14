@@ -1,5 +1,6 @@
 {%extends 'gram/base.html'%}
 {% load bootstrap3 %}
+{%load static%}
 
 {% block content %}
 {{block.super}}
@@ -15,11 +16,32 @@
     <div class="row">
       <div class="col-md-8">
        <h2><h3>
-      <a href="{% url 'new-profile' %}"><img src="{{userProfile.profile_photo.url}}"  class="img-responsive" alt="" style="height:8em;border-radius:60%;margin-bottom:2%;margin-left:4%;"></a>
+      <img src="{{userProfile.profile_photo.url}}"  class="img-responsive" alt="" style="height:8em;border-radius:60%;margin-bottom:2%;margin-left:4%;">
+        <a href="{% url 'new-profile' %}" style="float:right;margin-top:-30vh;margin-right:14vw;font-family: 'Metrophobic', sans-serif;">Edit Profile</a>
+
+
+
        <h2 style="float:left;margin-top:-30vh;margin-left:23vw;font-family: 'Metrophobic', sans-serif;">{{user.username}}<h3>
       <h2 style="float:right;margin-top:-20vh;font-family: 'Metrophobic', sans-serif;">{{userProfile.bio}}</h2>
+
     </div>
+
     <a href="{% url 'new-posts' %}">post here</a>
+
+
+    <ul>
+      <li class="dropdown" style="float:left;margin-left:-15vw;margin-top:3vh;list-style-type: none;">
+        <a href="#" class="dropdown-toggle btn btn-default" data-toggle="dropdown" role="button" aria-expanded="false"><img src="{% static 'img/wheel.png' %}" style="height:4vh;"><span class="caret"></span></a>
+
+        <ul class="dropdown-menu" role="menu">
+
+          <li><a href="/accounts/password/change">Change Password</a></li>
+          <li><a href="/logout">Logout</a></li>
+        </ul>
+      </li>
+    </ul>
+    </div>
+
 </div>
 </div>
 
