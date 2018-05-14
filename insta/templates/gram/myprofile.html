@@ -17,12 +17,13 @@
       <div class="col-md-8">
        <h2><h3>
       <img src="{{userProfile.profile_photo.url}}"  class="img-responsive" alt="" style="height:8em;border-radius:60%;margin-bottom:2%;margin-left:4%;">
-        <a href="{% url 'new-profile' %}" style="float:right;margin-top:-30vh;margin-right:14vw;font-family: 'Metrophobic', sans-serif;">Edit Profile</a>
+
+        <a href="{% url 'new-profile' %}" style="float:right;margin-top:-25vh;margin-right:15vw;font-family: 'Metrophobic', sans-serif;">Edit Profile</a>
 
 
 
-       <h2 style="float:left;margin-top:-30vh;margin-left:23vw;font-family: 'Metrophobic', sans-serif;">{{user.username}}<h3>
-      <h2 style="float:right;margin-top:-20vh;font-family: 'Metrophobic', sans-serif;">{{userProfile.bio}}</h2>
+       <h2 style="float:left;margin-top:-23vh;margin-left:23vw;font-family: 'Metrophobic', sans-serif;font-size:4.2em">{{user.username}}<h3>
+      <h2 style="float:right;margin-top:-15vh;font-family: 'Metrophobic', sans-serif;margin-right:22vw;">{{userProfile.bio}}</h2>
 
     </div>
 
@@ -45,12 +46,12 @@
 </div>
 </div>
 
-
+<div class="container" style="margin-left:11vh;">
+{%for photo_item in photo %}
+  <img src="{{photo_item.image.url}}" style="height:50vh;padding:0.8%;">
+{%endfor%}
+  </div>
 
   {%endif%}
-<div class="container" style="margin-left:11vh;">
-  {% for photo_item in photo %}
-  <img src="{{photo_item.image.url}}" style="height:50vh;padding:0.8%;">
-  {%endfor%}
-  </div>
+
 {% endblock %}

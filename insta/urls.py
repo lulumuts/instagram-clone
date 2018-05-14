@@ -10,8 +10,8 @@ urlpatterns=[
     url(r'^home/$',views.home,name='home'),
     url(r'^profile/',views.new_profile, name='new-profile'),
     url(r'^posts/',views.new_posts, name='new-posts'),
-    url(r'^myprofile/(?P<profile_id>\d+)/$',views.myprofile, name='myprofile'),
-    url(r'^myprofile/(?P<profile_id>\d+)/$',views.photos, name='photos'),
+    url(r'^myprofile/$',views.myprofile, name='myprofile'),
+    
     url(r'^register/',views.register, name='register'),
     url(r'^photos/$',views.photos,name='photos'),
 

@@ -55,27 +55,25 @@ def photos(request):
 
 
 @login_required
-def myprofile(request, profile_id):
-    if profile_id == "0":
-        if request.user.is_authenticated:
-            userProfile = Profile.objects.get(pk=profile_id)
+def myprofile(request):
 
-    else:
-        userProfile = Profile.objects.get(pk=profile_id)
 
     current_user = request.user
-    photo = Image.objects.all()
-    print(photo)
-    comments = Image.objects.all().prefetch_related('image_comments')
-    if current_user.is_authenticated():
-        HttpResponseRedirect('index')
-
-    userProfile = Profile.objects.get(pk=current_user.id)
+    print (current_user.id)
+    userProfile = Profile.objects.filter(profile_user=current_user).first()
     print(userProfile)
+
+    photo = Image.objects.filter(image_profile=userProfile).all()
+    print(photo)
+
 
 
     return render(request,'gram/myprofile.html', {'userProfile':userProfile,"photo":photo})
 
+
+def sample_view(request):
+    current_user = request.user
+    print (current_user.id)
 
 @login_required(login_url='/accounts/login/')
 def register(request):
@@ -86,14 +84,28 @@ def register(request):
 @login_required(login_url='/accounts/login/')
 def new_posts(request):
     current_user = request.user
-    profile_o = Profile.objects.get(profile_user=current_user)
+    userProfile = Profile.objects.filter(profile_user=current_user).first()
     if request.method == 'POST':
         form = NewPostsForm(request.POST, request.FILES)
         if form.is_valid():
             image = form.save(commit=False)
-            image.image_profile = profile_o
+            userProfile = Profile.objects.filter(profile_user=current_user).first()
+            image.image_profile=userProfile
             image.save()
-            return redirect('/')
+            return redirect('/home')
     else:
         form = NewPostsForm()
     return render(request, 'posts.html', {"form":form})
+
+def search_profile(request):
+
+    if 'username' in request.GET and request.GET["username"]:
+        search_term = request.GET.get("username")
+        searched_profiles = Profile.search_profile(search_term)
+        message = f"{search_term}"
+
+        return render(request,'gram/search.html',{"message":message, "username":searched_profiles})
+
+    else:
+        message = "You haven't searched for any term"
+        return render(request, 'gram/search.html',{"message":message})

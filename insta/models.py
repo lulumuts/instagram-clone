@@ -14,7 +14,7 @@ class followers(models.Model):
 class Profile(models.Model):
 
     profile_photo = models.ImageField(upload_to = 'posts/',blank=True)
-    bio = HTMLField()
+    bio = models.CharField(max_length=60)
     profile_user = models.ForeignKey(User,on_delete=models.CASCADE)
     profile_follows = models.ManyToManyField("self",related_name='follows',symmetrical = False)
 
@@ -30,6 +30,13 @@ class Profile(models.Model):
 
     # def find_profile(self,name):
 
+    @classmethod
+    def find_profile(cls,search_term):
+        profile = cls.objects.filter(profile_user__username__icontains=search_term)
+        print(profile)
+        return profile
+
+
     def __str__(self):
         return self.bio
 
@@ -39,9 +46,9 @@ class Image(models.Model):
     image=models.ImageField(upload_to = 'posts/',blank=True)
     image_name= models.CharField(max_length=60)
     image_caption=models.CharField(max_length=60)
-    image_profile= models.ForeignKey(Profile)
+    image_profile= models.ForeignKey(Profile,null=True)
     pub_date = models.DateTimeField(auto_now_add=True)
-    likes = models.ManyToManyField(User)
+    likes = models.ManyToManyField(User,default=None)
 
     def save_image(self):
         self.save()

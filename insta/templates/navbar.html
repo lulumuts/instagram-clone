@@ -26,14 +26,17 @@
 
 
 
-              <span><a href="{% url 'myprofile' user.id %}"><img src="{% static 'img/avatar.png' %}" style="height:10vh;margin-left:14vw;margin-top:2vh;"></a></span>
+              <span><a href="{% url 'myprofile' %}"><img src="{% static 'img/avatar.png' %}" style="height:10vh;margin-left:14vw;margin-top:2vh;"></a></span>
 
 
 
         {% else %}
-        <li><a class="btn btn-default" href="/accounts/login">Login</a>
-          <li><a class="btn btn-default" href="/accounts/register">register</a>
+        <ul style="list-style-type: none;">
+        <li><a class="btn btn-default" href="/accounts/login" style="display: inline;float:left;margin-left:-5vw;margin-top:50%;">LOGIN</a>
+          <li><a class="btn btn-default" href="/accounts/register" style="margin-left:10%;margin-top:-80%;">REGISTER</a>
         </li>
+      </ul>
+      </div>
         {%endif%}
       </div>
   </div>

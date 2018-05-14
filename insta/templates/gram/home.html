@@ -3,8 +3,9 @@
 
 {% block content %}
 {{bock.super}}
-<h1>hello {{name}}</h2>
-
+  {% if user.is_authenticated %}
+<h1>hello {{user.username}}</h2>
+{%endif%}
 
 
 
