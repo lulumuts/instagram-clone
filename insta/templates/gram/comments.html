@@ -1,0 +1,17 @@
+{%extends 'gram/base.html'%}
+{% load bootstrap3 %}
+
+{% block content %}
+{{block.super}}
+
+
+
+
+<p>{{comments_item.comment}}</p>
+<img src="{{comment.image_id.image.url}}">
+<img src="{{comment.profile_id.profile_photo.url}}">
+
+
+
+
+{%endblock%}

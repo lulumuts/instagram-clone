@@ -1,6 +1,6 @@
 from django.shortcuts import render,render_to_response,redirect
-from .forms import InstaLetterForm,NewProfileForm,NewPostsForm
-from .models import InstaLetterRecipients,Image,Profile
+from .forms import InstaLetterForm,NewProfileForm,NewPostsForm,CommentsForm
+from .models import InstaLetterRecipients,Image,Profile,Comments
 from django.contrib.auth.models import User
 from .email import send_welcome_email
 from django.http import HttpResponseRedirect,Http404,HttpResponseRedirect
@@ -40,9 +40,28 @@ def new_profile(request):
 
 
 def home(request):
-    photo = Image.objects.all()
+    photos = Image.objects.all()
     mass = Profile.objects.all()
-    return render(request, 'gram/home.html',{"mass":mass,"photo":photo})
+
+
+    current_user = request.user
+    userProfile = Profile.objects.filter(profile_user=current_user).first()
+    if request.method == 'POST':
+        form = CommentsForm(request.POST, request.FILES)
+        if form.is_valid():
+            comments = form.save(commit=False)
+
+            userProfile = Profile.objects.filter(profile_user=current_user).first()
+
+            print(userProfile)
+            print(image)
+            comments.profile_id = userProfile
+            comments.image_id = image
+            comments.save_comment()
+    else:
+        form = CommentsForm()
+
+    return render(request, 'gram/home.html',{"mass":mass,"photos":photos,"form":form})
 
 def photos(request):
 
@@ -109,3 +128,52 @@ def search_profile(request):
     else:
         message = "You haven't searched for any term"
         return render(request, 'gram/search.html',{"message":message})
+
+def comments(request):
+
+    current_user = request.user
+    userProfile = Profile.objects.filter(profile_user=current_user).first()
+
+    if request.method == 'POST':
+        form = CommentsForm(request.POST, request.FILES)
+        if form.is_valid():
+            comments = form.save(commit=False)
+
+            userProfile = Profile.objects.filter(profile_user=current_user).first()
+            image = Image.objects.filter(id=request.POST.get('photo_id')).first()
+            print(request.POST.get('photo_id'))
+            print(userProfile)
+            print(image)
+
+            comments.profile_id = userProfile
+            comments.image_id = image
+            comments.save()
+            return redirect('/home')
+    else:
+        form = CommentsForm()
+
+    return render(request, 'gram/comments.html', {"form":form,"comments":comments})
+
+def show_comments(request,image_id):
+    try:
+        comment= get_image_by_id(id=image_id)
+    except DoesNotExist:
+        raise Http404()
+
+    return render(request, 'gram/comments.html', {"comments":comments})
+
+def single_view(request,image_id):
+
+    images = Image.objects.get(id=image_id)
+
+    try:
+        images = Image.objects.get(id=image_id)
+        comments = Comments.objects.filter(image_id=images).all()
+        print(images)
+        print(comments)
+
+    except Image.DoesNotExist:
+
+        raise Http404("Image does not exist")
+
+    return render(request, 'gram/single.html', {"images":images,"comments":comments})

@@ -11,9 +11,12 @@ urlpatterns=[
     url(r'^profile/',views.new_profile, name='new-profile'),
     url(r'^posts/',views.new_posts, name='new-posts'),
     url(r'^myprofile/$',views.myprofile, name='myprofile'),
-    
+    url(r'^search/', views.search_profile, name='searched_profiles'),
     url(r'^register/',views.register, name='register'),
     url(r'^photos/$',views.photos,name='photos'),
+    url(r'^comments/$',views.show_comments,name='comments'),
+    url(r'^single/(?P<image_id>\d+)/$',views.single_view,name='single'),
+
 
 
 

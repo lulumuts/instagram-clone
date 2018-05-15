@@ -31,7 +31,7 @@ class Profile(models.Model):
     # def find_profile(self,name):
 
     @classmethod
-    def find_profile(cls,search_term):
+    def search_profile(cls,search_term):
         profile = cls.objects.filter(profile_user__username__icontains=search_term)
         print(profile)
         return profile
@@ -78,8 +78,8 @@ class likes(models.Model):
 
 class Comments(models.Model):
 
-    comment=HTMLField()
-    image_id= models.ForeignKey(Image)
+    comment=models.CharField(max_length=60)
+    image_id= models.ForeignKey(Image,null=True)
     profile_id=models.ForeignKey(Profile)
 
     def save_comments(self):

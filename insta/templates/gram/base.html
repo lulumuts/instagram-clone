@@ -20,7 +20,20 @@
 
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
   {% bootstrap_javascript %}
-
+<script>
+$.ajax({
+    type: 'POST',
+    url: '/articles/postComment/',
+    data: {
+       'comment': $('#articleCommentForm textarea').val(),
+       csrfmiddlewaretoken: $('input[name=csrfmiddlewaretoken]').val(),
+    },
+    dataType: 'json',
+    success: function(data){
+         $('.commentStyle').append(data)
+   }
+});
+</script>
   {% endblock %}
 </body>
 </html>

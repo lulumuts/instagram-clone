@@ -1,0 +1,29 @@
+{% extends 'gram/base.html'%}
+{% load staticfiles %}
+
+
+{% block content %}
+<div class="container">
+
+  <div class="row">
+    {% if username %}
+      <h2 style="text-align:center;margin-top:11vh;font-family: 'Metrophobic'">Found {{ username|length }} of searched username {{message}}</h2>
+    {% else %}
+      <h2> Found 0 profiles for the search username{{message}}</h2>
+    {% endif %}
+
+  </div>
+
+  <div class="row">
+
+  {% if username %}
+    {% for profile in username %}
+      <div class="col-sm-6 col-md-3"style="text-align:center;margin-top:11vh;font-family: 'Gothic A1'">
+
+          <img src="{{profile.profile_photo.url}}" class="img-responsive" alt="Image" style="height:400px;width:280px;padding-top:5%;border-radius:4%;">
+      </div>
+    {% endfor %}
+  {% endif %}
+  </div>
+</div>
+{% endblock %}

@@ -1,0 +1,26 @@
+{%extends 'gram/base.html'%}
+{% load bootstrap3 %}
+
+{% block content %}
+{{block.super}}
+
+<div class="card" style="background-color:white;width:55vw;margin-left:18vw;margin-bottom:10vh;">
+
+  <div class="container">
+      <h2 style="font-size:10vh;">{{images.image_name}}</h2>
+    
+      <img src="{{images.image.url}}" style="height:60em;margin-left:0.9%;">
+
+
+    {%for comment in comments%}
+    <div class="row" style="margin-left:1.3%;margin-top:5%;">
+    <p style="font-size:200%;"><strong>{{comment.profile_id.profile_user}}:</strong>{{comment.comment}}</p>
+
+
+  {%endfor%}
+
+  </div>
+</div>
+</div>
+
+{%endblock%}

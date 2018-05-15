@@ -1,5 +1,5 @@
 from django import forms
-from .models import Profile,Image
+from .models import Profile,Image,Comments
 
 
 class InstaLetterForm(forms.Form):
@@ -15,3 +15,8 @@ class NewPostsForm(forms.ModelForm):
     class Meta:
         model = Image
         exclude = ['pub_date','image_profile','likes']
+
+class CommentsForm(forms.ModelForm):
+    class Meta:
+        model = Comments
+        exclude = ['image_id','profile_id']
