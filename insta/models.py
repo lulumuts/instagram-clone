@@ -1,7 +1,11 @@
 from django.db import models
 from django.contrib.auth.models import User
 from tinymce.models import HTMLField
+from django.core.urlresolvers import reverse
+from django.utils.text import slugify
+from .utils import unique_slug_generator
 import datetime as dt
+
 # Create your models here.
 
 
@@ -50,6 +54,7 @@ class Image(models.Model):
     pub_date = models.DateTimeField(auto_now_add=True)
     likes = models.ManyToManyField(User,default=None)
 
+
     def save_image(self):
         self.save()
 
@@ -63,6 +68,15 @@ class Image(models.Model):
 
     def get_image_by_id(self,id):
         return self.objects.get(pk=id)
+
+    def get_absolute_url(self):
+        return self.Image.get_absolute_url()
+
+    # def get_like_url(self):
+    #     return reverse("images:like-toggle", kwargs={"slug": self.slug})
+    #
+    # def get_api_like_url(self):
+    #     return reverse("images:like-api-toggle", kwargs={"slug": self.slug})
 
     def __str__(self):
         return self.image_name

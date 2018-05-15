@@ -8,10 +8,10 @@
 
   <div class="container">
       <h2 style="font-size:10vh;">{{images.image_name}}</h2>
-    
+
       <img src="{{images.image.url}}" style="height:60em;margin-left:0.9%;">
 
-
+    <p><a class='like-btn' data-href='{{ images.get_api_like_url }}' data-likes='{{ images.likes.count }}' href='{{ images.get_like_url }}'>{{ images.likes.count }} Like</a></p>
     {%for comment in comments%}
     <div class="row" style="margin-left:1.3%;margin-top:5%;">
     <p style="font-size:200%;"><strong>{{comment.profile_id.profile_user}}:</strong>{{comment.comment}}</p>

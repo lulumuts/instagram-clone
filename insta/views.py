@@ -1,4 +1,4 @@
-from django.shortcuts import render,render_to_response,redirect
+from django.shortcuts import render,render_to_response,redirect,get_object_or_404
 from .forms import InstaLetterForm,NewProfileForm,NewPostsForm,CommentsForm
 from .models import InstaLetterRecipients,Image,Profile,Comments
 from django.contrib.auth.models import User
@@ -6,6 +6,7 @@ from .email import send_welcome_email
 from django.http import HttpResponseRedirect,Http404,HttpResponseRedirect
 from django.contrib.auth.decorators import login_required
 from django.core.urlresolvers import reverse
+from django.views.generic import RedirectView
 
 def welcome(request):
 
@@ -177,3 +178,17 @@ def single_view(request,image_id):
         raise Http404("Image does not exist")
 
     return render(request, 'gram/single.html', {"images":images,"comments":comments})
+
+class ImageLikeToggle(RedirectView):
+    def get_redirect_url(self, *args, **kwargs):
+
+        print(slug)
+        obj = get_object_or_404(Image, pk=id)
+        url_ = obj.get_absolute_url()
+        user = self.request.user
+        if user.is_authenticated():
+            if user in obj.likes.all():
+                obj.likes.remove(user)
+            else:
+                obj.likes.add(user)
+        return url_
