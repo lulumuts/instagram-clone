@@ -5,22 +5,40 @@
 {{block.super}}
 
 <div class="card" style="background-color:white;width:60vw;margin-left:18vw;margin-bottom:10vh;">
-
   <div class="container">
       <h2 style="font-size:10vh;">{{images.image_name}}</h2>
-
       <img src="{{images.image.url}}" style="height:60em;margin-left:0.9%;">
+<br>
 
-    <p><a class='like-btn' data-href='{{ images.get_api_like_url }}' data-likes='{{ images.likes.count }}' href='{{ images.get_like_url }}'>{{ images.likes.count }} Like</a></p>
-    {%for comment in comments%}
-    <div class="row" style="margin-left:1.3%;margin-top:5%;">
-    <p style="font-size:200%;"><strong>{{comment.profile_id.profile_user}}:</strong>{{comment.comment}}</p>
+      <input type="button" id="like" name="{{ images.id }}" value="Like" />
+      <p>Count: {{images.total_likes }}</p>
+
+      {%for comment in comments%}
+      <div class="row" style="margin-left:1.3%;margin-top:5%;">
+      <p style="font-size:200%;"><strong>{{comment.profile_id.profile_user}}:</strong>{{comment.comment}}</p>
 
 
-  {%endfor%}
+      {%endfor%}
 
+    </div>
   </div>
 </div>
-</div>
+<script>
+$('#like').click(function(){
+      $.ajax({
+               type: "POST",
+               url: "{% url 'like' %}",
+               data: {'slug': $(this).attr('name'), 'csrfmiddlewaretoken': '{{ csrf_token }}'},
+               dataType: "json",
+               success: function(response) {
+                      alert(response.message);
+                      alert('Image likes count is now ' + response.likes_count);
+                },
+                error: function(rs, e) {
+                       alert(rs.responseText);
+                }
+          });
+    })
+</script>
 
 {%endblock%}

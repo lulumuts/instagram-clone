@@ -7,7 +7,11 @@ from django.http import HttpResponseRedirect,Http404,HttpResponseRedirect
 from django.contrib.auth.decorators import login_required
 from django.core.urlresolvers import reverse
 from django.views.generic import RedirectView
-
+from django.views.decorators.http import require_POST
+try:
+    from django.utils import simplejson as json
+except ImportError:
+    import json
 
 '''
 Function to create a new profile once you are registered
@@ -209,19 +213,31 @@ def single_view(request,image_id):
         raise Http404("Image does not exist")
 
     return render(request, 'gram/single.html', {"images":images,"comments":comments})
+
 '''
 Function to instantiate the like functionality
 '''
-class ImageLikeToggle(RedirectView):
-    def get_redirect_url(self, *args, **kwargs):
 
+@login_required
+@require_POST
+def like(request):
+    if request.method == 'POST':
+        user = request.user
+        slug = request.POST.get('slug', None)
         print(slug)
-        obj = get_object_or_404(Image, pk=id)
-        url_ = obj.get_absolute_url()
-        user = self.request.user
-        if user.is_authenticated():
-            if user in obj.likes.all():
-                obj.likes.remove(user)
-            else:
-                obj.likes.add(user)
-        return url_
+        images = get_object_or_404(Image, id=id)
+        print(images)
+
+        if images.likes.filter(id=user.id).exists():
+            # user has already liked this image
+            # remove like/user
+            images.likes.remove(user)
+            message = 'You disliked this'
+        else:
+            # add a new like for a image
+            images.likes.add(user)
+            message = 'You liked this'
+
+    ctx = {'likes_count': images.total_likes, 'message': message}
+    # use mimetype instead of content_type if django < 5
+    return HttpResponse(json.dumps(ctx), content_type='application/json')
