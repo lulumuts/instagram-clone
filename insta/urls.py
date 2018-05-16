@@ -1,8 +1,9 @@
 from django.conf.urls import url
 from django.conf import settings
 from . import views
-from .views import (ImageLikeToggle)
 from django.conf.urls.static import static
+from .views import (PostLikeToggle)
+
 
 
 urlpatterns=[
@@ -17,7 +18,7 @@ urlpatterns=[
     url(r'^photos/$',views.photos,name='photos'),
     url(r'^comments/$',views.comments,name='comments'),
     url(r'^single/(?P<image_id>\d+)/$',views.single_view,name='single'),
-    url(r'^(?P<slug>[\w-]+)/like/$', ImageLikeToggle.as_view(), name='like-toggle'),
+    url(r'^(?P<slug>[\w-]+)/like/$', PostLikeToggle.as_view(), name='like-toggle'),
 
 
 

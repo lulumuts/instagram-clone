@@ -9,6 +9,7 @@ from django.core.urlresolvers import reverse
 from django.views.generic import RedirectView
 
 
+
 '''
 Function to create a new profile once you are registered
 '''
@@ -179,6 +180,7 @@ def comments(request):
 
     return render(request, 'gram/comments.html', {"form":form,"comments":comments})
 
+
 def show_comments(request,image_id):
     try:
         comment= get_image_by_id(id=image_id)
@@ -209,14 +211,15 @@ def single_view(request,image_id):
         raise Http404("Image does not exist")
 
     return render(request, 'gram/single.html', {"images":images,"comments":comments})
+    
 '''
 Function to instantiate the like functionality
 '''
-class ImageLikeToggle(RedirectView):
+class PostLikeToggle(RedirectView):
     def get_redirect_url(self, *args, **kwargs):
-
+        slug = self.kwargs.get("slug")
         print(slug)
-        obj = get_object_or_404(Image, pk=id)
+        obj = get_object_or_404(Image, slug=slug)
         url_ = obj.get_absolute_url()
         user = self.request.user
         if user.is_authenticated():

@@ -2,9 +2,9 @@ from django.db import models
 from django.contrib.auth.models import User
 from tinymce.models import HTMLField
 from django.core.urlresolvers import reverse
-from django.utils.text import slugify
-from .utils import unique_slug_generator
+from django.template.defaultfilters import slugify
 import datetime as dt
+
 
 # Create your models here.
 
@@ -52,9 +52,20 @@ class Image(models.Model):
     image_caption=models.CharField(max_length=60)
     image_profile= models.ForeignKey(Profile,null=True)
     pub_date = models.DateTimeField(auto_now_add=True)
-    likes = models.ManyToManyField(User,default=None)
+    slug = models.SlugField()
+    likes = models.ManyToManyField(User,related_name="likes",default=None)
 
 
+    @property
+    def total_likes(self):
+        '''Likes for images'''
+        return self.likes.count()
+
+    def save(self,*args, **kwargs):
+        self.slug = slugify(self.image_name)
+        super(Image, self).save(*args, **kwargs)
+
+        
     def save_image(self):
         self.save()
 
@@ -69,25 +80,18 @@ class Image(models.Model):
     def get_image_by_id(self,id):
         return self.objects.get(pk=id)
 
-    def get_absolute_url(self):
-        return self.Image.get_absolute_url()
+    def get_like_url(self):
+        return reverse("image:like-toggle")
 
-    # def get_like_url(self):
-    #     return reverse("images:like-toggle", kwargs={"slug": self.slug})
-    #
-    # def get_api_like_url(self):
-    #     return reverse("images:like-api-toggle", kwargs={"slug": self.slug})
+
+
+    def save(self, *args, **kwargs):
+        self.slug = slugify(self.name)
+        super(Company, self).save(*args, **kwargs)
 
     def __str__(self):
         return self.image_name
 
-class likes(models.Model):
-
-
-    profile = models.ForeignKey(User)
-
-    def __str__(self):
-        return self.profile
 
 
 class Comments(models.Model):
