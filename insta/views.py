@@ -8,6 +8,11 @@ from django.contrib.auth.decorators import login_required
 from django.core.urlresolvers import reverse
 from django.views.generic import RedirectView
 
+
+'''
+Function to create a new profile once you are registered
+'''
+
 def welcome(request):
 
     if request.method == 'POST':
@@ -25,7 +30,9 @@ def welcome(request):
         form = InstaLetterForm()
     return render(request, 'gram/newsfeed.html',{"letterForm" : form})
 
-
+'''
+Function to create a new profile once you are registered
+'''
 @login_required(login_url='/accounts/login/')
 def new_profile(request):
     current_user = request.user
@@ -39,6 +46,9 @@ def new_profile(request):
         form = NewProfileForm()
     return render(request, 'new_profile.html', {"form":form})
 
+'''
+A Function to display all photos of all users
+'''
 
 def home(request):
     photos = Image.objects.all()
@@ -64,6 +74,11 @@ def home(request):
 
     return render(request, 'gram/home.html',{"mass":mass,"photos":photos,"form":form})
 
+
+'''
+A Function to display a detail view of a specific user with all their posted photos
+'''
+
 def photos(request):
 
     current_user = request.user
@@ -73,6 +88,9 @@ def photos(request):
         HttpResponseRedirect('index')
     return render(request, 'gram/myprofile.html', {'photo': photo})
 
+'''
+A Function to display a detail view of a specific user
+'''
 
 @login_required
 def myprofile(request):
@@ -91,14 +109,15 @@ def myprofile(request):
     return render(request,'gram/myprofile.html', {'userProfile':userProfile,"photo":photo})
 
 
-def sample_view(request):
-    current_user = request.user
-    print (current_user.id)
+
 
 @login_required(login_url='/accounts/login/')
 def register(request):
     return render(request,'registration/registration_form.html')
 
+'''
+Functionality to create a new post as a registered User
+'''
 
 
 @login_required(login_url='/accounts/login/')
@@ -116,7 +135,9 @@ def new_posts(request):
     else:
         form = NewPostsForm()
     return render(request, 'posts.html', {"form":form})
-
+'''
+Functionality to search for a stored User
+'''
 def search_profile(request):
 
     if 'username' in request.GET and request.GET["username"]:
@@ -129,7 +150,9 @@ def search_profile(request):
     else:
         message = "You haven't searched for any term"
         return render(request, 'gram/search.html',{"message":message})
-
+'''
+Function used to store all comments from the form
+'''
 def comments(request):
 
     current_user = request.user
@@ -163,6 +186,13 @@ def show_comments(request,image_id):
 
     return render(request, 'gram/comments.html', {"comments":comments})
 
+
+'''
+Function to view one single image with its details
+'''
+
+
+
 def single_view(request,image_id):
 
     images = Image.objects.get(id=image_id)
@@ -178,7 +208,9 @@ def single_view(request,image_id):
         raise Http404("Image does not exist")
 
     return render(request, 'gram/single.html', {"images":images,"comments":comments})
-
+'''
+Function to instantiate the like functionality
+'''
 class ImageLikeToggle(RedirectView):
     def get_redirect_url(self, *args, **kwargs):
 
