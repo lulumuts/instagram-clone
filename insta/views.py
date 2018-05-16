@@ -179,11 +179,10 @@ def comments(request):
     return render(request, 'gram/comments.html', {"form":form,"comments":comments})
 
 def show_comments(request,image_id):
-
-
-    comments= get_object_or_404(Comments, pk=id)
-
-
+    try:
+        comment= get_image_by_id(id=image_id)
+    except DoesNotExist:
+        raise Http404()
 
     return render(request, 'gram/comments.html', {"comments":comments})
 

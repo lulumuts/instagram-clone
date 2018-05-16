@@ -35,7 +35,7 @@
 
 
 
-        <form  action="{%url 'single' %}" method="post" enctype="multipart/form-data" style="width:45%;margin-left:-1%;">
+        <form  action="{%url 'single' photo_item.pk %}" method="post" enctype="multipart/form-data" style="width:45%;margin-left:-1%;">
           {%csrf_token%}
           <input type="hidden" class="btn btn-success btn-lg" name="photo_id" value="{{photo_item.id}}">
           {% bootstrap_form form%}
