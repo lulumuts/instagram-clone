@@ -2,7 +2,6 @@ from django.db import models
 from django.contrib.auth.models import User
 from tinymce.models import HTMLField
 from django.core.urlresolvers import reverse
-from django.template.defaultfilters import slugify
 import datetime as dt
 
 
@@ -52,7 +51,6 @@ class Image(models.Model):
     image_caption=models.CharField(max_length=60)
     image_profile= models.ForeignKey(Profile,null=True)
     pub_date = models.DateTimeField(auto_now_add=True)
-    slug = models.SlugField()
     likes = models.ManyToManyField(User,related_name="likes",default=None)
 
 
@@ -61,11 +59,8 @@ class Image(models.Model):
         '''Likes for images'''
         return self.likes.count()
 
-    def save(self,*args, **kwargs):
-        self.slug = slugify(self.image_name)
-        super(Image, self).save(*args, **kwargs)
 
-        
+
     def save_image(self):
         self.save()
 

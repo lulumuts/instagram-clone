@@ -18,7 +18,7 @@ urlpatterns=[
     url(r'^photos/$',views.photos,name='photos'),
     url(r'^comments/$',views.comments,name='comments'),
     url(r'^single/(?P<image_id>\d+)/$',views.single_view,name='single'),
-    url(r'^(?P<slug>[\w-]+)/like/$', PostLikeToggle.as_view(), name='like-toggle'),
+
 
 
 
