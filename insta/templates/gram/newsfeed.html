@@ -3,8 +3,9 @@
 
 {% block content %}
 {{bock.super}}
-<h1>checking</h2>
-
+<h1>Welcome to Instagram</h2>
+  <h4><a class="btn btn-default" href="/accounts/login" style="display: inline;float:left;margin-left:-5vw;margin-top:50%;">LOGIN</a></h4>
+<h4><a class="btn btn-default" href="/accounts/register" style="margin-left:10%;margin-top:-80%;">REGISTER</a></h4>
   <div class="container-fluid">
 {% if user.is_authenticated %}
     <form  action="{%url 'insta'%}" method="post">
