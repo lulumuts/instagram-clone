@@ -68,7 +68,7 @@ def home(request):
             print(image)
             comments.profile_id = userProfile
             comments.image_id = image
-            comments.save_comment()
+            comments.save_comments()
     else:
         form = CommentsForm()
 
@@ -172,6 +172,7 @@ def comments(request):
             comments.profile_id = userProfile
             comments.image_id = image
             comments.save()
+            print(comments)
             return redirect('/home')
     else:
         form = CommentsForm()

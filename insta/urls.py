@@ -15,7 +15,7 @@ urlpatterns=[
     url(r'^search/', views.search_profile, name='searched_profiles'),
     url(r'^register/',views.register, name='register'),
     url(r'^photos/$',views.photos,name='photos'),
-    url(r'^comments/$',views.show_comments,name='comments'),
+    url(r'^comments/$',views.comments,name='comments'),
     url(r'^single/(?P<image_id>\d+)/$',views.single_view,name='single'),
     url(r'^(?P<slug>[\w-]+)/like/$', ImageLikeToggle.as_view(), name='like-toggle'),
 
