@@ -211,20 +211,7 @@ def single_view(request,image_id):
         raise Http404("Image does not exist")
 
     return render(request, 'gram/single.html', {"images":images,"comments":comments})
-    
+
 '''
 Function to instantiate the like functionality
 '''
-class PostLikeToggle(RedirectView):
-    def get_redirect_url(self, *args, **kwargs):
-        slug = self.kwargs.get("slug")
-        print(slug)
-        obj = get_object_or_404(Image, slug=slug)
-        url_ = obj.get_absolute_url()
-        user = self.request.user
-        if user.is_authenticated():
-            if user in obj.likes.all():
-                obj.likes.remove(user)
-            else:
-                obj.likes.add(user)
-        return url_
