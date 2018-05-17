@@ -10,7 +10,7 @@
 {{block.super}}
   {% if user.is_authenticated %}
 
-<h1>hello {{user.username}}</h1>
+<h1 style="margin-left:20vw;">hello {{user.username}}</h1>
 
 
 
@@ -23,12 +23,12 @@
     {%for photo_item in photos%}
     <div class="card" style="background-color:white;margin-left:20vw;margin-right:30vw;margin-bottom:5vh;width:42vw;">
 
-    <a href="{% url 'single' photo_item.pk %}">
-      view</a><img src="{{photo_item.image_profile.profile_photo.url}}"  class="img-responsive" alt="" style="height:4%;width:10%;border-radius:70%;margin-bottom:2%;margin-left:4%;"></a>
+
+      <img src="{{photo_item.image_profile.profile_photo.url}}"  class="img-responsive" alt="" style="height:4%;width:10%;border-radius:70%;margin-bottom:2%;margin-left:4%;margin-top:5vh;"></a>
 
 
 
-      <img src="{{photo_item.image.url}}" alt="Avatar" style="width:100%;">
+      <a href="{% url 'single' photo_item.pk %}"><img src="{{photo_item.image.url}}" alt="Avatar" style="width:100%;"></a>
       <div class="container">
         <h4 style="width:40%;"><b>{{photo_item.image_caption}}</b></h4>
 

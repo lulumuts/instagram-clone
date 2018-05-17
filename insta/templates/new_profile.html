@@ -11,10 +11,7 @@
 
 {% block styles %} {% bootstrap_css %}
 {% endblock %}
-
-</head>
-
-<body><nav class="navbar navbar-blank">
+<nav class="navbar navbar-blank">
   <div class="container-fluid">
     <div class="navbar-header">
       <a class="navbar-brand" href="{% url 'home' %}">Instagram</a>
@@ -44,8 +41,11 @@
       </div>
   </div>
 </nav>
+</head>
 
-  <form  action="{%url 'new-profile' %}" method="post" enctype="multipart/form-data">
+<body>
+
+  <form  action="{%url 'new-profile' %}" method="post" enctype="multipart/form-data" style="width:30%;margin-left:30vw;">
     {%csrf_token%}
 
     {% bootstrap_form form%}

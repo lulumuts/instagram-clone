@@ -10,7 +10,7 @@
 
 
     {% if user.is_authenticated %}
-    <div class="container" style="padding-bottom:3%;">
+    <div class="container" style="padding-bottom:3%;background-color:white;">
 
 
     <div class="row">
@@ -18,24 +18,23 @@
        <h2><h3>
       <img src="{{userProfile.profile_photo.url}}"  class="img-responsive" alt="" style="height:8em;border-radius:60%;margin-bottom:2%;margin-left:4%;">
 
-        <a href="{% url 'new-profile' %}" style="float:right;margin-top:-25vh;margin-right:15vw;font-family: 'Metrophobic', sans-serif;">Edit Profile</a>
-
-
 
        <h2 style="float:left;margin-top:-23vh;margin-left:23vw;font-family: 'Metrophobic', sans-serif;font-size:4.2em">{{user.username}}<h3>
       <h2 style="float:right;margin-top:-15vh;font-family: 'Metrophobic', sans-serif;margin-right:22vw;">{{userProfile.bio}}</h2>
 
+
     </div>
 
-    <a href="{% url 'new-posts' %}">post here</a>
 
 
     <ul>
-      <li class="dropdown" style="float:left;margin-left:-15vw;margin-top:3vh;list-style-type: none;">
+      <li class="dropdown" style="float:left;margin-left:-19vw;margin-top:20vh;list-style-type: none;">
         <a href="#" class="dropdown-toggle btn btn-default" data-toggle="dropdown" role="button" aria-expanded="false"><img src="{% static 'img/wheel.png' %}" style="height:4vh;"><span class="caret"></span></a>
 
-        <ul class="dropdown-menu" role="menu">
 
+        <ul class="dropdown-menu" role="menu">
+          <li><a href="{% url 'new-profile' %}">Edit Profile</a></li>
+          <li><a href="{% url 'new-posts' %}">Post here</a></li>
           <li><a href="/accounts/password/change">Change Password</a></li>
           <li><a href="/logout">Logout</a></li>
         </ul>

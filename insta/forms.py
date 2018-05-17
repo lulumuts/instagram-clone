@@ -9,12 +9,12 @@ class InstaLetterForm(forms.Form):
 class NewProfileForm(forms.ModelForm):
     class Meta:
         model = Profile
-        exclude = ['profile_follows','profile_user']
+        exclude = ['profile_follows']
 
 class NewPostsForm(forms.ModelForm):
     class Meta:
         model = Image
-        exclude = ['pub_date','image_profile','likes','slug']
+        exclude = ['pub_date','image_profile','likes']
 
 class CommentsForm(forms.ModelForm):
     class Meta:
